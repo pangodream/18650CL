@@ -31,6 +31,9 @@
 
 #include "Arduino.h"
 
+#define DEF_PIN 34
+#define DEF_CONV_FACTOR 1.7
+
 /*
  * 18650 Ion-Li battery charge
  * Calculates charge level of an 18650 Ion-Li battery
@@ -42,6 +45,13 @@ class Pangodream_18650_CL {
     * @param AddressPin, ADC pin number where the voltage divider is connected to
     */
     Pangodream_18650_CL(int AddressPin);
+    
+    /*
+    * Constructor
+    * @param AddressPin, ADC pin number where the voltage divider is connected to
+    * @param ConvFactor, Convertion factor for analog read units to volts
+    */
+    Pangodream_18650_CL(int AddressPin, double ConvFactor);
 
     /*
     * Constructor
@@ -53,10 +63,14 @@ class Pangodream_18650_CL {
      * @return The calculated battery charge level
      */
     int GetBatteryChargeLevel();
+    double GetBatteryVolts();
+    int GetAnalogPin();
+    double GetConvFactor();
        
   private:
 
     int    _AddressPin;               //!< ADC pin used, default is GPIO34 - ADC1_6
+    double _ConvFactor;               //!< Convertion factor to translate analog units to volts
     double _vs[101];                 //Array with voltage - charge definitions
     
     void   _initVoltsArray();
