@@ -33,6 +33,7 @@
 
 #define DEF_PIN 34
 #define DEF_CONV_FACTOR 1.7
+#define DEF_READS 20
 
 /*
  * 18650 Ion-Li battery charge
@@ -40,19 +41,27 @@
  */
 class Pangodream_18650_CL {    
   public:  
-    /*
-    * Constructor
-    * @param AddressPin, ADC pin number where the voltage divider is connected to
-    */
-    Pangodream_18650_CL(int AddressPin);
     
     /*
     * Constructor
-    * @param AddressPin, ADC pin number where the voltage divider is connected to
-    * @param ConvFactor, Convertion factor for analog read units to volts
+    * @param addressPin, ADC pin number where the voltage divider is connected to
     */
-    Pangodream_18650_CL(int AddressPin, double ConvFactor);
-
+    Pangodream_18650_CL(int addressPin);
+    
+    /*
+    * Constructor
+    * @param addressPin, ADC pin number where the voltage divider is connected to
+    * @param convFactor, Convertion factor for analog read units to volts
+    */
+    Pangodream_18650_CL(int addressPin, double convFactor);
+    
+    /*
+    * Constructor
+    * @param addressPin, ADC pin number where the voltage divider is connected to
+    * @param convFactor, Convertion factor for analog read units to volts
+    * @param reads, Number of reads of analog pin to calculate an average value
+    */
+    Pangodream_18650_CL(int addressPin, double convFactor, int reads);
     /*
     * Constructor
     */
@@ -62,19 +71,22 @@ class Pangodream_18650_CL {
      * Get the battery charge level (0-100)
      * @return The calculated battery charge level
      */
-    int GetBatteryChargeLevel();
-    double GetBatteryVolts();
-    int GetAnalogPin();
-    double GetConvFactor();
+    int getBatteryChargeLevel();
+    double getBatteryVolts();
+    int getAnalogPin();
+    int pinRead();
+    double getConvFactor();
        
   private:
 
-    int    _AddressPin;               //!< ADC pin used, default is GPIO34 - ADC1_6
-    double _ConvFactor;               //!< Convertion factor to translate analog units to volts
+    int    _addressPin;               //!< ADC pin used, default is GPIO34 - ADC1_6
+    int    _reads;                    //Number of reads of ADC pin to calculate an average value
+    double _convFactor;               //!< Convertion factor to translate analog units to volts
     double _vs[101];                 //Array with voltage - charge definitions
     
     void   _initVoltsArray();
     int    _getChargeLevel(double volts);
+    int    _analogRead(int pinNumber);
     double _analogReadToVolts(int readValue);
     
 };

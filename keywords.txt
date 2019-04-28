@@ -11,9 +11,8 @@ Pangodream_18650_CL KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-GetBatteryCharge KEYWORD2
-GetAnalogPin KEYWORD2
-GetConvFactor KEYWORD2
-GetBatteryVolts KEYWORD2
-
-
+getBatteryChargeLevel KEYWORD2
+getBatteryVolts KEYWORD2
+getAnalogPin KEYWORD2
+pinRead KEYWORD2
+getConvFactor KEYWORD2
