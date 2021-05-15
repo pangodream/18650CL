@@ -149,6 +149,6 @@ double Pangodream_18650_CL::_analogReadToVolts(int readValue){
 }
 
 double Pangodream_18650_CL::getBatteryVolts(){
-    int readValue = analogRead(_addressPin);
+    int readValue = _analogRead(_addressPin);
     return _analogReadToVolts(readValue);
 }
